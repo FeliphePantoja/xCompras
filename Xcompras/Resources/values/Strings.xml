@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Xcompras</string>
+  <string name="tv_usuario">Usuário</string>
+  <string name="tv_senha">Senha</string>
+  <string name="tv_produto">Produto</string>
+  <string name="tv_valor">Valor</string>
+  <string name="tv_quantidade">Quantidade</string>
+  <string name="button_salvar">Salvar</string>
+  <string name="tv_nome">Nome Completo</string>
+  <string name="button">OK</string>
+</resources>
