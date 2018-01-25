@@ -5,7 +5,7 @@
   <string name="tv_senha">Senha</string>
   <string name="tv_produto">Produto</string>
   <string name="tv_valor">Valor</string>
-  <string name="tv_quantidade">Quantidade</string>
+  <string name="tv_local">Local Compra</string>
   <string name="button_salvar">Salvar</string>
   <string name="tv_nome">Nome Completo</string>
   <string name="button">OK</string>

@@ -66,7 +66,7 @@ namespace Xcompras.Views.activity
 
 			Nome = (EditText)view.FindViewById( Resource.Id.edNome );
 			Usuario = (EditText)view.FindViewById( Resource.Id.edUsuario );
-			Senha = (EditText)view.FindViewById( Resource.Id.edUsuario );
+			Senha = (EditText)view.FindViewById( Resource.Id.edSenha );
 			cadastrar = (Button)view.FindViewById( Resource.Id.btSalvar );
 
 			AlertDialog.Builder alert = new AlertDialog.Builder( this );
@@ -77,6 +77,10 @@ namespace Xcompras.Views.activity
 
 			// Evento
 			cadastrar.Click +=this.Cadastrar_Click;
+
+			//Dismiss();
+			
+
 
 		}
 
@@ -95,20 +99,10 @@ namespace Xcompras.Views.activity
 
 					using ( SQLiteConnection db = new DataContext().GetDatabase() )
 					{
-						int check = db.Insert( nvUsuario );
-
-						if ( check > 0 )
-						{
-							Toast.MakeText( this, "id"+ nvUsuario.id, ToastLength.Short ).Show();
-							DismissDialog();
-							//Toast.MakeText( this, "Cadastro realizado com sucesso", ToastLength.Short ).Show();
-						}
-						else
-						{
-							Toast.MakeText( this, "Cadastro não realizado", ToastLength.Short ).Show();
-						}
+						db.Insert( nvUsuario );
+						//Toast.MakeText( this, "id"+ nvUsuario.id, ToastLength.Short ).Show();
+						Toast.MakeText( this, "Cadastro realizado com sucesso", ToastLength.Short ).Show();
 					}
-
 				}
 				else
 				{
@@ -118,8 +112,8 @@ namespace Xcompras.Views.activity
 			}
 			catch ( System.Exception ex )
 			{
+				Toast.MakeText( this, "Cadastro não realizado", ToastLength.Short ).Show();
 				System.Diagnostics.Debug.WriteLine( "ERRO!"+ex.Message );
-				//Toast.MakeText( this, "ERRO"+ex.Message, ToastLength.Long ).Show();
 			}
 		}
 	}
