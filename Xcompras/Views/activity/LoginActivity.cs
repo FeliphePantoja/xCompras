@@ -7,15 +7,18 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V7.Widget;
+using Android.Util;
 using Android.Views;
 using Android.Widget;
 using SQLite;
 using Xcompras.Controller;
 using Xcompras.Model;
+using Xcompras.Views.adpter;
 
 namespace Xcompras.Views.activity
 {
-	[Activity( Label = "Xcompras", MainLauncher = true )]
+	[Activity( Label = "Xcompras", MainLauncher = true, Icon = "@drawable/car" )]
 	public class LoginActivity : Activity
 	{
 		private EditText usuario;
@@ -42,6 +45,7 @@ namespace Xcompras.Views.activity
 			acessar = (Button)FindViewById( Resource.Id.btAcessar );
 			novoCadastro = (TextView)FindViewById( Resource.Id.tvNovoCadastro );
 
+
 			// Evendos
 			acessar.Click +=this.Acessar_Click;
 			novoCadastro.Click +=this.NovoCadastro_Click;
@@ -55,8 +59,15 @@ namespace Xcompras.Views.activity
 
 		private void Acessar_Click( object sender, EventArgs e )
 		{
-			Intent intent = new Intent( this, typeof( cad_ComprasActivity ) );
-			StartActivity( intent );
+
+			if ( usuario.Text.ToString().Equals( "" ) && senha.Text.ToString().Equals( "" ) )
+			{
+				Toast.MakeText( this, "Existe Campos Vazios", ToastLength.Short ).Show();
+			}
+			else
+			{
+				consultaLogin( usuario.Text.ToString(), senha.Text.ToString() );
+			}
 		}
 
 		public void novoCadastroUsuario()
@@ -79,9 +90,6 @@ namespace Xcompras.Views.activity
 			cadastrar.Click +=this.Cadastrar_Click;
 
 			//Dismiss();
-			
-
-
 		}
 
 		private void Cadastrar_Click( object sender, EventArgs e )
@@ -114,6 +122,28 @@ namespace Xcompras.Views.activity
 			{
 				Toast.MakeText( this, "Cadastro não realizado", ToastLength.Short ).Show();
 				System.Diagnostics.Debug.WriteLine( "ERRO!"+ex.Message );
+			}
+		}
+
+		private void consultaLogin( string nome, string senha )
+		{
+
+			using ( SQLiteConnection Bd = new DataContext().GetDatabase() )
+			{
+				cadUsuario query = ( from usuario in Bd.Table<cadUsuario>() where usuario.nome == nome && usuario.senha ==senha select usuario ).SingleOrDefault();//.FirstOrDefault();
+
+				//Toast.MakeText( this, "Usuario"+query, ToastLength.Short ).Show();
+
+				if ( query == null )
+				{
+					Toast.MakeText( this, "Usuário não Cadastrado", ToastLength.Short ).Show();
+				}
+				else
+				{
+					Intent intent = new Intent( this, typeof( cad_ComprasActivity ) );
+					StartActivity( intent );
+				}
+
 			}
 		}
 	}

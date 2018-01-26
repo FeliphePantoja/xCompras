@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using Newtonsoft.Json;
 using SQLite;
 using Xcompras.Controller;
 using Xcompras.Model;
@@ -17,51 +18,55 @@ using Xcompras.Views.adpter;
 
 namespace Xcompras.Views.activity
 {
-	[Activity( Label = "lista_ComprasActivity" )]
+	[Activity( Label = "Lista de Compras" )]
 	public class lista_ComprasActivity : Activity
 	{
 		private RecyclerView mRecyclerView;
 		private RecyclerView.LayoutManager mLayoutManager;
-		private RecyclerView.Adapter mAdpter;
+		private recycleAdpter mAdpter;
 		private List<cadProduto> produto = new List<cadProduto>();
-		public event EventHandler<int> ItemClick;
 
 		protected override void OnCreate( Bundle savedInstanceState )
 		{
 			base.OnCreate( savedInstanceState );
 			SetContentView( Resource.Layout.listaCompras );
 
-			mRecyclerView = (RecyclerView)FindViewById(Resource.Id.recyclerView);
+			mRecyclerView = (RecyclerView)FindViewById( Resource.Id.recyclerView );
 
 			dadosBD();
 
 			// Criando o laayout manager
 			mLayoutManager = new LinearLayoutManager( this );
-			mRecyclerView.SetLayoutManager(mLayoutManager);
-			mAdpter = new recycleAdpter(produto);
-			mRecyclerView.SetAdapter(mAdpter);
-
-			/*
-			 
-			 http://sharpmobilecode.com/android-listviews-reinvented/
-			 https://developer.xamarin.com/guides/android/user_interface/layouts/recycler-view/extending-the-example/
-			 */
+			mRecyclerView.SetLayoutManager( mLayoutManager );
+			mAdpter = new recycleAdpter( produto );
+			mAdpter.ItemClick += OnItemClick;
+			mRecyclerView.SetAdapter( mAdpter );
+			mRecyclerView.AddItemDecoration( new DividerItemDecoration( this, DividerItemDecoration.Vertical ) );
 
 		}
 
 		public void dadosBD()
 		{
-			using (SQLiteConnection bd = new DataContext().GetDataBase() )
+			using ( SQLiteConnection bd = new DataContext().GetDataBase() )
 			{
 				produto = bd.Table<cadProduto>().ToList();
 				//bd.DeleteAll<cadProduto>();
+				//bd.Execute("drop table cadProduto");
 			}
 		}
 
 		public void OnItemClick( object sender, int position )
 		{
-			int photoNum = position + 1;
-			Toast.MakeText( this, "This is photo number " + photoNum, ToastLength.Short ).Show();
+			int itemNum = position + 1;
+			//int tipo = position.GetType();
+			//Toast.MakeText( this, "O Click foi: " + itemNum, ToastLength.Short ).Show();
+
+			//dadosProduto produto = new dadosProduto();
+			//produto.id = position + 1;
+			GlobalData.id = itemNum;
+			Intent intent = new Intent( this, typeof( infor_ProdutoActivity ) );
+			//intent.PutExtra("dadosProduto", JsonConvert.SerializeObject( produto ) );
+			StartActivity( intent );
 		}
 	}
 }

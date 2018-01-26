@@ -7,6 +7,7 @@ using Xcompras.Controller;
 using Android.Views;
 using Android.Content;
 using Xcompras.Views.activity;
+using System;
 
 namespace Xcompras
 {
@@ -16,7 +17,9 @@ namespace Xcompras
 		private EditText produto;
 		private EditText valor;
 		private EditText local;
+		private TextView data;
 		private Button salvar;
+		private string Data;
 
 		protected override void OnCreate( Bundle savedInstanceState )
 		{
@@ -29,6 +32,13 @@ namespace Xcompras
 			valor = (EditText)FindViewById( Resource.Id.etValor );
 			local = (EditText)FindViewById( Resource.Id.etLocalCompra );
 			salvar = (Button)FindViewById( Resource.Id.btSalvar );
+			data = (TextView)FindViewById(Resource.Id.tvData);
+
+			// Para a data
+			DateTime date = DateTime.Now;
+			string formato = "dd/MM/yyyy";
+			data.Text = date.ToString(formato);
+			Data = date.ToString( formato );
 
 			salvar.Click +=this.Salvar_Click;
 		}
@@ -50,6 +60,7 @@ namespace Xcompras
 					cadastroProd.produto = produto.Text;
 					cadastroProd.valor = valor.Text;
 					cadastroProd.local = local.Text;
+					cadastroProd.data = Data;
 
 					using ( SQLiteConnection db = new DataContext().GetDatabase() )
 					{

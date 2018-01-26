@@ -34,12 +34,14 @@ namespace Xcompras.Views.adpter
 			public TextView produto { get; set; }
 			public TextView valor { get; set; }
 			public TextView localCompra { get; set; }
+			public TextView Data { get; set; }
 
 			public MyView( View view , Action<int> listener) : base( view )
 			{
 				produto = (TextView)view.FindViewById( Resource.Id.tvProduto );
 				valor = (TextView)view.FindViewById(Resource.Id.tvValor);
 				localCompra = (TextView)view.FindViewById(Resource.Id.tvLocal);
+				Data = (TextView)view.FindViewById(Resource.Id.tvData);
 
 				view.Click += ( sender, e ) => listener( base.LayoutPosition );
 
@@ -59,8 +61,9 @@ namespace Xcompras.Views.adpter
 		{
 			MyView myHolder = holder as MyView;
 			myHolder.produto.Text = this.produtos[position].produto;
-			myHolder.valor.Text = this.produtos[position].valor;
+			myHolder.valor.Text = "R$ "+ this.produtos[position].valor;
 			myHolder.localCompra.Text = this.produtos[position].local;
+			myHolder.Data.Text = this.produtos[position].data;
 		}
 
 		public override RecyclerView.ViewHolder OnCreateViewHolder( ViewGroup parent, int viewType )
