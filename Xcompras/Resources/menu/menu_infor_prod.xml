@@ -3,14 +3,14 @@
   <item
        android:id="@+id/menu_salvar"
        android:showAsAction="ifRoom"
-       android:icon="@drawable/salvar"
+       android:icon="@mipmap/ic_salvar"
          android:orderInCategory="50"
        android:title="SALVAR"/>
 
   <item
        android:id="@+id/menu_excluir"
        android:showAsAction="ifRoom"
-       android:icon="@drawable/deleta"
+       android:icon="@mipmap/ic_excluir"
          android:orderInCategory="60"
        android:title="DELETE"/>
 

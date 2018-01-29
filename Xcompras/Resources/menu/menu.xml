@@ -3,7 +3,7 @@
   <item
        android:id="@+id/menu_lista"
        android:showAsAction="ifRoom"
-       android:icon="@drawable/lista"
+       android:icon="@mipmap/ic_list"
          android:orderInCategory="50"
        android:title="SAIR"/>
 

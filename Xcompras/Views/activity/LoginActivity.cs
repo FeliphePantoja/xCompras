@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Support.V7.Widget;
-using Android.Util;
 using Android.Views;
 using Android.Widget;
 using SQLite;
 using Xcompras.Controller;
 using Xcompras.Model;
-using Xcompras.Views.adpter;
 
 namespace Xcompras.Views.activity
 {
@@ -25,6 +19,7 @@ namespace Xcompras.Views.activity
 		private EditText senha;
 		private TextView novoCadastro;
 		private Button acessar;
+		private AlertDialog.Builder alert;
 
 		// Para recuperar o objeto do cadastro usuário
 		private EditText Nome;
@@ -80,7 +75,8 @@ namespace Xcompras.Views.activity
 			Senha = (EditText)view.FindViewById( Resource.Id.edSenha );
 			cadastrar = (Button)view.FindViewById( Resource.Id.btSalvar );
 
-			AlertDialog.Builder alert = new AlertDialog.Builder( this );
+			// variavel criada global
+			alert = new AlertDialog.Builder( this );
 			alert.Create();
 			alert.SetTitle( "NOVO CADASTRO" );
 			alert.SetView( view );

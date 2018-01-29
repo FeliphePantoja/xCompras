@@ -17,6 +17,7 @@ namespace Xcompras.Model
 		public int id { get; set; }
 		public string produto { get; set; }
 		public string valor { get; set; }
+		public string data { get; set; }
 		public string localCompra { get; set; }
 	}
 }

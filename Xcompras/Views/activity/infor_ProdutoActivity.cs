@@ -22,13 +22,15 @@ namespace Xcompras.Views.activity
 		private EditText produto;
 		private EditText valor;
 		private EditText localCompra;
-		dadosProduto prod = new dadosProduto();
+		private dadosProduto prod = new dadosProduto();
+		private cadProduto produtoUpdate = new cadProduto();
 
 		protected override void OnCreate( Bundle savedInstanceState )
 		{
 			base.OnCreate( savedInstanceState );
 			SetContentView( Resource.Layout.inforProduto );
 			Title = "";
+			// Pegando a informação que ta guardada na variavel local
 			dadosProduto( GlobalData.id );
 
 			produto = (EditText)FindViewById( Resource.Id.etProduto );
@@ -42,16 +44,26 @@ namespace Xcompras.Views.activity
 
 		private void dadosProduto( int codigo )
 		{
-			using ( SQLiteConnection Bd = new DataContext().GetDatabase() )
+			try
 			{
-				cadProduto query = ( from produto in Bd.Table<cadProduto>() where produto.codigo == codigo select produto ).SingleOrDefault();
+				using ( SQLiteConnection Bd = new DataContext().GetDatabase() )
+				{
+					cadProduto query = ( from produto in Bd.Table<cadProduto>() where produto.codigo == codigo select produto ).SingleOrDefault();
 
-				prod.produto = query.produto.ToString();
-				prod.valor = query.valor.ToString();
-				prod.localCompra = query.local.ToString();
+					prod.produto = query.produto.ToString();
+					prod.valor = query.valor.ToString();
+					prod.localCompra = query.local.ToString();
+					prod.data = query.data.ToString();
 
-				//Toast.MakeText( this, "Usuario"+query.codigo, ToastLength.Short ).Show();
+					//Toast.MakeText( this, "Usuario"+query.codigo, ToastLength.Short ).Show();
+				}
 			}
+			catch ( System.Exception ex )
+			{
+				System.Diagnostics.Debug.WriteLine( "ERRO!", ex.Message );
+			}
+
+			
 		}
 
 		public void setaCapos()
@@ -74,15 +86,61 @@ namespace Xcompras.Views.activity
 			switch ( item.ItemId )
 			{
 				case Resource.Id.menu_salvar:
-					Toast.MakeText( this, "EM DESENVOLVIMENTO", ToastLength.Short ).Show();
+					salvarInforProd();
+					Finish();
+					Toast.MakeText( this, "O Produto Foi Atualizado", ToastLength.Short ).Show();
 					break;
 
 				case Resource.Id.menu_excluir:
-					Toast.MakeText( this, "EM DESENVOLVIMENTO", ToastLength.Short ).Show();
+					excluirProd();
+					Finish();
+					Toast.MakeText( this, " O Produto Foi Excluido", ToastLength.Short ).Show();
 					break;
 			}
 
 			return base.OnOptionsItemSelected( item );
 		}
+
+		private void salvarInforProd()
+		{
+
+			try
+			{
+				using ( SQLiteConnection bd = new DataContext().GetDataBase() )
+				{
+					// A linha abaixo pega as informações dos campos para salvar no banco de dados
+					produtoUpdate.codigo = GlobalData.id;
+					produtoUpdate.produto = produto.Text;
+					produtoUpdate.valor = valor.Text;
+					produtoUpdate.local = localCompra.Text;
+					produtoUpdate.data = prod.data;
+
+					bd.Update( produtoUpdate );
+				}
+			}
+			catch ( System.Exception ex )
+			{
+				System.Diagnostics.Debug.WriteLine( "ERRO!", ex.Message );
+			}
+		}
+
+		private void excluirProd()
+		{
+
+			try
+			{
+				using ( SQLiteConnection bd = new DataContext().GetDataBase() )
+				{
+					produtoUpdate.codigo = GlobalData.id;
+					bd.Delete( produtoUpdate);
+				}
+			}
+			catch ( System.Exception ex )
+			{
+				System.Diagnostics.Debug.WriteLine( "ERRO!", ex.Message );
+			}
+
+		}
+
 	}
 }

@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Support.V7.Widget;
-using Android.Views;
-using Android.Widget;
-using Newtonsoft.Json;
 using SQLite;
 using Xcompras.Controller;
 using Xcompras.Model;
@@ -25,6 +19,7 @@ namespace Xcompras.Views.activity
 		private RecyclerView.LayoutManager mLayoutManager;
 		private recycleAdpter mAdpter;
 		private List<cadProduto> produto = new List<cadProduto>();
+		private cadProduto prod = new cadProduto();
 
 		protected override void OnCreate( Bundle savedInstanceState )
 		{
@@ -33,6 +28,20 @@ namespace Xcompras.Views.activity
 
 			mRecyclerView = (RecyclerView)FindViewById( Resource.Id.recyclerView );
 
+			// A linha abaixo cria a lista pela primeira vez
+			myLista();
+		}
+
+		// A linha abaixo atualiza a lista quando os dados são alterados ou excluidos
+		protected override void OnStart()
+		{
+			base.OnStart();
+			myLista();
+		}
+
+		public void myLista()
+		{
+			// Recuperando as informações do banco e colocando na lista
 			dadosBD();
 
 			// Criando o laayout manager
@@ -42,7 +51,6 @@ namespace Xcompras.Views.activity
 			mAdpter.ItemClick += OnItemClick;
 			mRecyclerView.SetAdapter( mAdpter );
 			mRecyclerView.AddItemDecoration( new DividerItemDecoration( this, DividerItemDecoration.Vertical ) );
-
 		}
 
 		public void dadosBD()
@@ -50,23 +58,21 @@ namespace Xcompras.Views.activity
 			using ( SQLiteConnection bd = new DataContext().GetDataBase() )
 			{
 				produto = bd.Table<cadProduto>().ToList();
+
 				//bd.DeleteAll<cadProduto>();
 				//bd.Execute("drop table cadProduto");
+				//bd.Execute("SELECT * FROM cadProduto");
 			}
 		}
 
 		public void OnItemClick( object sender, int position )
 		{
-			int itemNum = position + 1;
-			//int tipo = position.GetType();
-			//Toast.MakeText( this, "O Click foi: " + itemNum, ToastLength.Short ).Show();
-
-			//dadosProduto produto = new dadosProduto();
-			//produto.id = position + 1;
-			GlobalData.id = itemNum;
+			
+			GlobalData.id = position;
 			Intent intent = new Intent( this, typeof( infor_ProdutoActivity ) );
-			//intent.PutExtra("dadosProduto", JsonConvert.SerializeObject( produto ) );
 			StartActivity( intent );
+			//intent.PutExtra("dadosProduto", JsonConvert.SerializeObject( produto ) );
+
 		}
 	}
 }

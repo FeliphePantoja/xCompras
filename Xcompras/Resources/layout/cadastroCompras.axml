@@ -51,4 +51,14 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:id="@+id/btSalvar" />
+    <TextView
+        android:text="R$: 00.00"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="250dp"
+        android:textSize="25dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:id="@+id/tvTotalGasto" />
 </LinearLayout>
