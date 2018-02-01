@@ -15,11 +15,11 @@ using Xcompras.Model;
 
 namespace Xcompras.Controller
 {
-	public class DataContext
+	public class DadosContext
 	{
 		public string path { get; set; }
 
-		public DataContext()
+		public DadosContext()
 		{
 			string nomeBanco = "appBanco.db";
 			string documentsPath = System.Environment.GetFolderPath( System.Environment.SpecialFolder.Personal );

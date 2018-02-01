@@ -5,10 +5,12 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Support.V7.Widget;
+using Android.Widget;
 using SQLite;
 using Xcompras.Controller;
 using Xcompras.Model;
 using Xcompras.Views.adpter;
+using static Xcompras.Views.adpter.recycleAdpter;
 
 namespace Xcompras.Views.activity
 {
@@ -20,17 +22,18 @@ namespace Xcompras.Views.activity
 		private recycleAdpter mAdpter;
 		private List<cadProduto> produto = new List<cadProduto>();
 		private cadProduto prod = new cadProduto();
-
+		
 		protected override void OnCreate( Bundle savedInstanceState )
 		{
 			base.OnCreate( savedInstanceState );
 			SetContentView( Resource.Layout.listaCompras );
 
 			mRecyclerView = (RecyclerView)FindViewById( Resource.Id.recyclerView );
-
+			
 			// A linha abaixo cria a lista pela primeira vez
 			myLista();
 		}
+
 
 		// A linha abaixo atualiza a lista quando os dados são alterados ou excluidos
 		protected override void OnStart()
@@ -47,15 +50,17 @@ namespace Xcompras.Views.activity
 			// Criando o laayout manager
 			mLayoutManager = new LinearLayoutManager( this );
 			mRecyclerView.SetLayoutManager( mLayoutManager );
-			mAdpter = new recycleAdpter( produto );
+			mAdpter = new recycleAdpter( produto, this );
 			mAdpter.ItemClick += OnItemClick;
 			mRecyclerView.SetAdapter( mAdpter );
-			mRecyclerView.AddItemDecoration( new DividerItemDecoration( this, DividerItemDecoration.Vertical ) );
+
+			// A linha abaixo coloca a linha na lista
+			//mRecyclerView.AddItemDecoration( new DividerItemDecoration( this, DividerItemDecoration.Vertical ) );
 		}
 
 		public void dadosBD()
 		{
-			using ( SQLiteConnection bd = new DataContext().GetDataBase() )
+			using ( SQLiteConnection bd = new DadosContext().GetDataBase() )
 			{
 				produto = bd.Table<cadProduto>().ToList();
 

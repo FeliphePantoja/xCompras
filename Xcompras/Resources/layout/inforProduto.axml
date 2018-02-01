@@ -5,34 +5,38 @@
     android:layout_height="match_parent"
     android:minWidth="25px"
     android:minHeight="25px">
+
+  <include android:id="@+id/toolbar"
+   layout="@layout/toolbar"/>
+
+  <EditText
+      android:layout_marginTop="20dp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="@string/tv_produto"
+      android:textSize="15sp"
+      android:layout_marginRight="10dp"
+      android:layout_marginLeft="10dp"
+      android:id="@+id/etProduto" />
+  <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_marginTop="10dp"
+      android:layout_marginRight="10dp"
+      android:layout_marginLeft="10dp"
+      android:layout_height="wrap_content">
     <EditText
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
-        android:hint="@string/tv_produto"
+        android:hint="@string/tv_local"
         android:textSize="15sp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:id="@+id/etProduto" />
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_height="wrap_content">
-        <EditText
-            android:layout_width="260dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/tv_local"
-            android:textSize="15sp"
-            android:id="@+id/etLocalCompra" />
-        <EditText
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/tv_valor"
-            android:inputType="numberDecimal"
-            android:textSize="15sp"
-            android:id="@+id/etValor" />
-    </LinearLayout>
+        android:id="@+id/etLocalCompra" />
+    <EditText
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/tv_valor"
+        android:inputType="numberDecimal"
+        android:textSize="15sp"
+        android:id="@+id/etValor" />
+  </LinearLayout>
 </LinearLayout>

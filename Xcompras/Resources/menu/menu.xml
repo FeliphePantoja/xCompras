@@ -1,10 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
   <item
        android:id="@+id/menu_lista"
        android:showAsAction="ifRoom"
        android:icon="@mipmap/ic_list"
-         android:orderInCategory="50"
-       android:title="SAIR"/>
+       android:orderInCategory="50"
+       android:title="Lista"/>
 
+  <item
+       android:id="@+id/menu_sair"
+       android:showAsAction="never"
+       android:orderInCategory="50"
+       android:title="SAIR"/>
 </menu>

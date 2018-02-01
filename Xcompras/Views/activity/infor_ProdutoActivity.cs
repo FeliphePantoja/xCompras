@@ -7,6 +7,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V4.App;
 using Android.Views;
 using Android.Widget;
 using Newtonsoft.Json;
@@ -16,7 +17,8 @@ using Xcompras.Model;
 
 namespace Xcompras.Views.activity
 {
-	[Activity( Label = "infor_ProdutoActivity" )]
+	[Activity( Label = "infor_ProdutoActivity", ParentActivity = typeof( lista_ComprasActivity ) )]
+	[MetaData( NavUtils.ParentActivity, Value = ".lista_ComprasActivity" )]
 	public class infor_ProdutoActivity : Activity
 	{
 		private EditText produto;
@@ -24,6 +26,7 @@ namespace Xcompras.Views.activity
 		private EditText localCompra;
 		private dadosProduto prod = new dadosProduto();
 		private cadProduto produtoUpdate = new cadProduto();
+		private Toolbar toolbar;
 
 		protected override void OnCreate( Bundle savedInstanceState )
 		{
@@ -33,9 +36,14 @@ namespace Xcompras.Views.activity
 			// Pegando a informação que ta guardada na variavel local
 			dadosProduto( GlobalData.id );
 
+			// Recuperando os objetos do layout
 			produto = (EditText)FindViewById( Resource.Id.etProduto );
 			valor = (EditText)FindViewById( Resource.Id.etValor );
 			localCompra = (EditText)FindViewById( Resource.Id.etLocalCompra );
+			toolbar = (Toolbar)FindViewById( Resource.Id.toolbar );
+			toolbar.SetNavigationIcon( Resource.Mipmap.ic_fechar );
+			
+			SetActionBar( toolbar );
 
 			setaCapos();
 
@@ -46,7 +54,7 @@ namespace Xcompras.Views.activity
 		{
 			try
 			{
-				using ( SQLiteConnection Bd = new DataContext().GetDatabase() )
+				using ( SQLiteConnection Bd = new DadosContext().GetDatabase() )
 				{
 					cadProduto query = ( from produto in Bd.Table<cadProduto>() where produto.codigo == codigo select produto ).SingleOrDefault();
 
@@ -63,7 +71,7 @@ namespace Xcompras.Views.activity
 				System.Diagnostics.Debug.WriteLine( "ERRO!", ex.Message );
 			}
 
-			
+
 		}
 
 		public void setaCapos()
@@ -106,7 +114,7 @@ namespace Xcompras.Views.activity
 
 			try
 			{
-				using ( SQLiteConnection bd = new DataContext().GetDataBase() )
+				using ( SQLiteConnection bd = new DadosContext().GetDataBase() )
 				{
 					// A linha abaixo pega as informações dos campos para salvar no banco de dados
 					produtoUpdate.codigo = GlobalData.id;
@@ -129,10 +137,10 @@ namespace Xcompras.Views.activity
 
 			try
 			{
-				using ( SQLiteConnection bd = new DataContext().GetDataBase() )
+				using ( SQLiteConnection bd = new DadosContext().GetDataBase() )
 				{
 					produtoUpdate.codigo = GlobalData.id;
-					bd.Delete( produtoUpdate);
+					bd.Delete( produtoUpdate );
 				}
 			}
 			catch ( System.Exception ex )

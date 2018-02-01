@@ -12,14 +12,15 @@ using Xcompras.Model;
 
 namespace Xcompras.Views.activity
 {
-	[Activity( Label = "Xcompras", MainLauncher = true, Icon = "@drawable/car" )]
+	[Activity( Label = "Xcompras", MainLauncher = true )]
 	public class LoginActivity : Activity
 	{
 		private EditText usuario;
 		private EditText senha;
 		private TextView novoCadastro;
 		private Button acessar;
-		private AlertDialog.Builder alert;
+		private AlertDialog dialog;
+		private LinearLayout LayoutLogin;
 
 		// Para recuperar o objeto do cadastro usuário
 		private EditText Nome;
@@ -39,6 +40,7 @@ namespace Xcompras.Views.activity
 			senha = (EditText)FindViewById( Resource.Id.etSenha );
 			acessar = (Button)FindViewById( Resource.Id.btAcessar );
 			novoCadastro = (TextView)FindViewById( Resource.Id.tvNovoCadastro );
+			LayoutLogin = (LinearLayout)FindViewById( Resource.Id.layoutLogin );
 
 
 			// Evendos
@@ -76,16 +78,14 @@ namespace Xcompras.Views.activity
 			cadastrar = (Button)view.FindViewById( Resource.Id.btSalvar );
 
 			// variavel criada global
-			alert = new AlertDialog.Builder( this );
-			alert.Create();
+			AlertDialog.Builder alert = new AlertDialog.Builder( this );
 			alert.SetTitle( "NOVO CADASTRO" );
 			alert.SetView( view );
-			alert.Show();
+			dialog = alert.Create();
+			dialog.Show();
 
 			// Evento
 			cadastrar.Click +=this.Cadastrar_Click;
-
-			//Dismiss();
 		}
 
 		private void Cadastrar_Click( object sender, EventArgs e )
@@ -101,11 +101,13 @@ namespace Xcompras.Views.activity
 					nvUsuario.senha = this.Senha.Text;
 
 
-					using ( SQLiteConnection db = new DataContext().GetDatabase() )
+					using ( SQLiteConnection db = new DadosContext().GetDatabase() )
 					{
 						db.Insert( nvUsuario );
 						//Toast.MakeText( this, "id"+ nvUsuario.id, ToastLength.Short ).Show();
 						Toast.MakeText( this, "Cadastro realizado com sucesso", ToastLength.Short ).Show();
+
+						dialog.Dismiss();
 					}
 				}
 				else
@@ -124,7 +126,7 @@ namespace Xcompras.Views.activity
 		private void consultaLogin( string nome, string senha )
 		{
 
-			using ( SQLiteConnection Bd = new DataContext().GetDatabase() )
+			using ( SQLiteConnection Bd = new DadosContext().GetDatabase() )
 			{
 				cadUsuario query = ( from usuario in Bd.Table<cadUsuario>() where usuario.nome == nome && usuario.senha ==senha select usuario ).SingleOrDefault();//.FirstOrDefault();
 
@@ -136,8 +138,12 @@ namespace Xcompras.Views.activity
 				}
 				else
 				{
+					salvarDados salvar = new salvarDados();
+
 					Intent intent = new Intent( this, typeof( cad_ComprasActivity ) );
 					StartActivity( intent );
+
+					Finish();
 				}
 
 			}
