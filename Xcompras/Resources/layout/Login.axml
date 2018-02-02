@@ -5,42 +5,54 @@
     android:layout_height="match_parent"
     android:id="@+id/layoutLogin"
     android:gravity="center">
-  <EditText
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:textSize="15sp"
-      android:singleLine="true"
-      android:layout_marginRight="10dp"
-      android:layout_marginLeft="10dp"
-      android:hint="@string/tv_usuario"
-      android:id="@+id/etUsuario" />
-  <EditText
-      android:inputType="textPassword"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="5dp"
-      android:textSize="15sp"
-      android:singleLine="true"
-      android:layout_marginRight="10dp"
-      android:layout_marginLeft="10dp"
-      android:hint="@string/tv_senha"
-      android:id="@+id/etSenha" />
-  <TextView
-      android:text="NOVO USUÁRIO ?"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="10dp"
-      android:textSize="15sp"
-      android:textColor="@color/colorCinza"
-      android:fontFamily="monospace"
-      android:gravity="center"
-      android:id="@+id/tvNovoCadastro" />
-  <Button
-      android:text="@string/button"
-      android:layout_marginTop="30dp"
-      android:textSize="16sp"
-      android:background="@color/colorBlack"
-      android:layout_width="300dp"
-      android:layout_height="wrap_content"
-      android:id="@+id/btAcessar" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:singleLine="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:hint="@string/tv_usuario"
+        android:id="@+id/etUsuario" />
+    <EditText
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="15sp"
+        android:singleLine="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:hint="@string/tv_senha"
+        android:id="@+id/etSenha" />
+    <TextView
+        android:text="NOVO USUÁRIO ?"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="15sp"
+        android:textColor="@color/colorCinza"
+        android:fontFamily="monospace"
+        android:gravity="center"
+        android:id="@+id/tvNovoCadastro" />
+    <Button
+        android:text="@string/button"
+        android:layout_marginTop="30dp"
+        android:textSize="16sp"
+        android:background="@color/colorBlack"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/btAcessar" />
+  
+  <!---
+   <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Username" />
+    </android.support.design.widget.TextInputLayout>
+  -->
 </LinearLayout>

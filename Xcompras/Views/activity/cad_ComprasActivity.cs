@@ -117,6 +117,11 @@ namespace Xcompras
 				case Resource.Id.menu_sair:
 					Finish();
 					break;
+
+				case Resource.Id.menu_configuracao:
+					Intent config = new Intent( this, typeof( Configuracao_Activity ) );
+					StartActivity( config );
+					break;
 			}
 
 			return base.OnOptionsItemSelected( item );

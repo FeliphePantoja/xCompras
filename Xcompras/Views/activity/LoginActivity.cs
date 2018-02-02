@@ -4,6 +4,7 @@ using System.Linq;
 using Android.App;
 using Android.Content;
 using Android.OS;
+using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 using SQLite;
@@ -20,8 +21,8 @@ namespace Xcompras.Views.activity
 		private TextView novoCadastro;
 		private Button acessar;
 		private AlertDialog dialog;
-		private LinearLayout LayoutLogin;
-
+		private LinearLayout login;
+		
 		// Para recuperar o objeto do cadastro usuário
 		private EditText Nome;
 		private EditText Usuario;
@@ -31,8 +32,6 @@ namespace Xcompras.Views.activity
 		protected override void OnCreate( Bundle savedInstanceState )
 		{
 			base.OnCreate( savedInstanceState );
-
-			// Create your application here
 			SetContentView( Resource.Layout.Login );
 
 			// Recuperando os objetos da tela
@@ -40,7 +39,8 @@ namespace Xcompras.Views.activity
 			senha = (EditText)FindViewById( Resource.Id.etSenha );
 			acessar = (Button)FindViewById( Resource.Id.btAcessar );
 			novoCadastro = (TextView)FindViewById( Resource.Id.tvNovoCadastro );
-			LayoutLogin = (LinearLayout)FindViewById( Resource.Id.layoutLogin );
+
+			login = (LinearLayout)FindViewById( Resource.Id.layoutLogin );
 
 
 			// Evendos
@@ -59,7 +59,8 @@ namespace Xcompras.Views.activity
 
 			if ( usuario.Text.ToString().Equals( "" ) && senha.Text.ToString().Equals( "" ) )
 			{
-				Toast.MakeText( this, "Existe Campos Vazios", ToastLength.Short ).Show();
+				Snackbar.Make( login, "Existe Campos Vazios", Snackbar.LengthShort ).Show();
+				//Toast.MakeText( this, "Existe Campos Vazios", ToastLength.Short ).Show();
 			}
 			else
 			{
@@ -79,7 +80,7 @@ namespace Xcompras.Views.activity
 
 			// variavel criada global
 			AlertDialog.Builder alert = new AlertDialog.Builder( this );
-			alert.SetTitle( "NOVO CADASTRO" );
+			//alert.SetTitle( "NOVO CADASTRO" );
 			alert.SetView( view );
 			dialog = alert.Create();
 			dialog.Show();
